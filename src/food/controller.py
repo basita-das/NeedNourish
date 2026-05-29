@@ -1,0 +1,88 @@
+from sqlalchemy.orm import Session
+from sqlalchemy import func
+from geoalchemy2.shape import to_shape
+from geoalchemy2.elements import WKTElement
+from fastapi import HTTPException
+from .models import Food, FoodStatus
+
+def format_food(food: Food):
+    """
+    Converts a SQLAlchemy Food object into a dictionary and removes
+    binary PostGIS data that crashes FastAPI's JSON encoder.
+    """
+    shape = to_shape(food.location)
+    
+    # Create a copy of the attributes
+    data = food.__dict__.copy()
+    
+    # REMOVE THE BINARY OBJECTS THAT CAUSE CRASHES
+    data.pop("location", None)
+    data.pop("_sa_instance_state", None)
+    
+    # ADD HUMAN READABLE COORDINATES
+    data["latitude"] = shape.y
+    data["longitude"] = shape.x
+    
+    return data
+
+def create_food(db: Session, food_in, supplier_id: int):
+    point = f'POINT({food_in.longitude} {food_in.latitude})'
+    db_food = Food(
+        **food_in.model_dump(exclude={"latitude", "longitude"}),
+        location=WKTElement(point, srid=4326),
+        supplier_id=supplier_id
+    )
+    db.add(db_food)
+    db.commit()
+    db.refresh(db_food)
+    return db_food
+
+def get_nearby(db: Session, lat, lon, radius):
+    user_loc = WKTElement(f'POINT({lon} {lat})', srid=4326)
+    return db.query(Food).filter(
+        Food.status == FoodStatus.AVAILABLE,
+        func.ST_DistanceSphere(Food.location, user_loc) <= radius
+    ).all()
+
+def update_food(db: Session, food_id: int, food_in, supplier_id: int):
+    food = db.query(Food).filter(Food.id == food_id).first()
+    if not food or food.supplier_id != supplier_id:
+        raise HTTPException(status_code=403, detail="Permission denied")
+    
+    data = food_in.model_dump(exclude_unset=True)
+    if "latitude" in data or "longitude" in data:
+        lat = data.get("latitude", to_shape(food.location).y)
+        lon = data.get("longitude", to_shape(food.location).x)
+        food.location = WKTElement(f'POINT({lon} {lat})', srid=4326)
+    
+    for k, v in data.items():
+        if k not in ["latitude", "longitude"]: setattr(food, k, v)
+    db.commit()
+    db.refresh(food)
+    return food
+
+def delete_food(db: Session, food_id: int, supplier_id: int):
+    food = db.query(Food).filter(Food.id == food_id).first()
+    if not food or food.supplier_id != supplier_id:
+        raise HTTPException(status_code=403, detail="Permission denied")
+    db.delete(food)
+    db.commit()
+
+def claim_food_item(db: Session, food_id: int, needy_id: int):
+    """Updates the status to claimed and assigns a receiver."""
+    food = db.query(Food).filter(Food.id == food_id, Food.status == FoodStatus.AVAILABLE).first()
+    if not food:
+        raise HTTPException(status_code=400, detail="Item is already claimed or unavailable")
+    
+    food.status = FoodStatus.CLAIMED
+    food.receiver_id = needy_id
+    db.commit()
+    db.refresh(food)
+    return food
+
+def get_food_by_id(db: Session, food_id: int):
+    """Standard detail fetcher."""
+    food = db.query(Food).filter(Food.id == food_id).first()
+    if not food:
+        raise HTTPException(status_code=404, detail="Food item not found")
+    return food
