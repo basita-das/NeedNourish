@@ -11,6 +11,10 @@ from src.food.router import router as food_router
 from src.supplier.router import router as supplier_router
 from src.needy.router import router as needy_router
 
+
+from fastapi.middleware.cors import CORSMiddleware 
+# CORS configuration for frontend integration
+
 # Create the database tables
 # NOTE: Ensure you have the PostGIS extension enabled in your DB: 
 # Execute "CREATE EXTENSION IF NOT EXISTS postgis;" in your Postgres terminal first.
@@ -21,11 +25,20 @@ app = FastAPI(
     description="A platform connecting food donors with those in need.",
     version="1.0.0"
 )
+# Configure CORS to allow requests from the frontend (Vite) running on localhost:5173
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"], # Vite's default port
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Root endpoint
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to NeedNourish API. Visit /docs for Swagger UI."}
+    return {"message": "Welcome to NeedNourish API."}
 
 # Include all module routers
 app.include_router(food_router)

@@ -1,38 +1,50 @@
-# --- Virtual Environment ---
-# This is the folder containing your installed libraries (pip install)
-# Never upload this; others will run 'pip install' themselves.
+# --- Virtual Environment (Python) ---
 env/
 venv/
 .venv/
 ENV/
 
-# --- Environment Variables ---
-# CRITICAL: This contains your DB password and JWT Secret Key. 
-# NEVER commit this to Git.
+# --- Environment Variables (Backend & Frontend) ---
+# This ignores the .env in the root AND inside the client folder
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # --- Python Cache ---
-# Temporary files created by Python when running your code
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
 .cache/
 
+# --- Frontend (Node/Vite) ---
+# Never upload the thousands of small library files in node_modules
+node_modules/
+client/node_modules/
+
+# Production build folder (the compiled frontend)
+dist/
+client/dist/
+
+# Vite/TS log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+
 # --- Operating System Files ---
-# Junk files created by Windows or macOS
 .DS_Store
 Thumbs.db
 
 # --- IDE Settings ---
-# Settings specific to your VS Code
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# --- Distribution / Build ---
-# Only needed if you package your app
-dist/
-build/
-*.egg-info/
+# --- Local Databases ---
+# If you ever use SQLite for testing
+*.sqlite3
+*.db
