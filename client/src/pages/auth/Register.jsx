@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { authService } from "../../services/authService";
 import { useNavigate, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const { t } = useTranslation();
   const [role, setRole] = useState("suppliers");
   const [formData, setFormData] = useState({
     email: "",
@@ -35,21 +37,30 @@ const Register = () => {
     <div className="flex min-h-[calc(100vh-64px)] items-center justify-center p-4">
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-8 border">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          Create Account
+          {t("auth.register_title")}
         </h2>
 
+        {/* Role Toggle */}
         <div className="flex mb-8 bg-gray-100 rounded-xl p-1">
           <button
             onClick={() => setRole("suppliers")}
-            className={`flex-1 py-2 rounded-lg font-medium transition ${role === "suppliers" ? "bg-white shadow text-green-600" : "text-gray-500"}`}
+            className={`flex-1 py-2 rounded-lg font-medium transition ${
+              role === "suppliers"
+                ? "bg-white shadow text-green-600"
+                : "text-gray-500"
+            }`}
           >
-            Donor
+            {t("auth.donor")}
           </button>
           <button
             onClick={() => setRole("needies")}
-            className={`flex-1 py-2 rounded-lg font-medium transition ${role === "needies" ? "bg-white shadow text-green-600" : "text-gray-500"}`}
+            className={`flex-1 py-2 rounded-lg font-medium transition ${
+              role === "needies"
+                ? "bg-white shadow text-green-600"
+                : "text-gray-500"
+            }`}
           >
-            Receiver
+            {t("auth.receiver")}
           </button>
         </div>
 
@@ -60,10 +71,13 @@ const Register = () => {
         )}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+          {/* Dynamic Name Input */}
           <input
             type="text"
             required
-            placeholder={role === "suppliers" ? "Business Name" : "Full Name"}
+            placeholder={
+              role === "suppliers" ? t("auth.biz_ph") : t("auth.name_ph")
+            }
             className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"
             onChange={(e) =>
               setFormData({
@@ -73,34 +87,38 @@ const Register = () => {
               })
             }
           />
+
           <input
             type="email"
-            placeholder="Email"
+            placeholder={t("auth.email_ph")}
             required
             className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
           />
+
           <input
             type="password"
-            placeholder="Password (min 8 characters)"
+            placeholder={t("auth.pass_ph")}
             required
             className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
           />
+
           <input
             type="text"
-            placeholder="Phone Number"
+            placeholder={t("auth.phone_ph")}
             className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"
             onChange={(e) =>
               setFormData({ ...formData, phone_number: e.target.value })
             }
           />
+
           <textarea
-            placeholder="Address"
+            placeholder={t("auth.addr_ph")}
             className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500 h-24"
             onChange={(e) =>
               setFormData({ ...formData, address: e.target.value })
@@ -108,9 +126,16 @@ const Register = () => {
           />
 
           <button className="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition mt-2">
-            Create Account
+            {t("auth.register_btn")}
           </button>
         </form>
+
+        <p className="mt-6 text-center text-gray-600">
+          {t("auth.have_account")}{" "}
+          <Link to="/login" className="text-green-600 font-bold">
+            {t("auth.login_link")}
+          </Link>
+        </p>
       </div>
     </div>
   );

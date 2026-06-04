@@ -1,0 +1,67 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "post": "Post Food",
+    "find": "Find Food",
+    "claims": "My Claims",
+    "login": "Login",
+    "join": "Join Now",
+    "logout": "Logout"
+  },
+  "auth": {
+    "welcome": "Welcome Back",
+    "subtitle": "Login to continue your impact",
+    "register_title": "Create Account",
+    "role_label": "I am a:",
+    "donor": "Supplier (Donor)",
+    "receiver": "Needy (Receiver)",
+    "signin": "Sign In",
+    "register_btn": "Register Now",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?",
+    "register_link": "Register here",
+    "login_link": "Login here",
+    "email_ph": "Email Address",
+    "pass_ph": "Password",
+    "name_ph": "Full Name",
+    "biz_ph": "Business Name",
+    "phone_ph": "Phone Number",
+    "addr_ph": "Address"
+  },
+  "food": {
+    "add_title": "Post Surplus Food",
+    "my_inventory_title": "My Inventory",
+    "label_title": "Food Title",
+    "label_desc": "Description",
+    "label_cat": "Category",
+    "label_expiry": "Expiry Time",
+    "btn_location": "Detect My Location",
+    "btn_submit": "Post Food Listing",
+    "ph_title": "e.g., 10 Fresh Bagels",
+    "ph_desc": "Packaging, allergens, etc.",
+    "status_available": "Available",
+    "status_claimed": "Claimed",
+    "btn_claim": "Claim Food",
+    "nearby_title": "Explore Food Nearby",
+    "no_food": "No available food found in your area.",
+    "no_inventory": "You haven't posted any food yet.",
+    "detecting": "Fetching GPS...",
+    "posting": "Posting...",
+    "history_title": "My Claim History",
+    "history_subtitle": "View all the food items you've helped save.",
+    "claimed_on": "Claimed on",
+    "no_history": "You haven't claimed any food yet."
+  },
+  "categories": {
+    "bakery": "Bakery",
+    "produce": "Produce",
+    "cooked_meals": "Cooked Meals",
+    "dairy": "Dairy",
+    "other": "Other"
+  },
+  "stats": {
+    "total": "Total Posts",
+    "active": "Active Listings",
+    "claimed": "Claimed Items"
+  }
+}
