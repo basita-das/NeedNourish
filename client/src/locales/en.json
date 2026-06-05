@@ -41,7 +41,11 @@
     "ph_desc": "Packaging, allergens, etc.",
     "status_available": "Available",
     "status_claimed": "Claimed",
+    "status_completed": "Handed Over",
     "btn_claim": "Claim Food",
+    "verify_btn": "Verify Pickup",
+    "your_code": "Your Pickup Code",
+    "code_placeholder": "Enter Code",
     "nearby_title": "Explore Food Nearby",
     "no_food": "No available food found in your area.",
     "no_inventory": "You haven't posted any food yet.",
@@ -63,5 +67,15 @@
     "total": "Total Posts",
     "active": "Active Listings",
     "claimed": "Claimed Items"
+  },
+  "notify": {
+    "login_success": "Welcome back!",
+    "login_error": "Invalid credentials.",
+    "register_success": "Account created! Please login.",
+    "post_success": "Food posted successfully!",
+    "claim_success": "Item claimed! Check My Claims.",
+    "verify_success": "Pickup confirmed successfully!",
+    "verify_error": "Invalid code. Please try again.",
+    "error": "Something went wrong."
   }
 }

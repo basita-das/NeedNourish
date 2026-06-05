@@ -5,6 +5,8 @@ from geoalchemy2.elements import WKTElement
 from fastapi import HTTPException
 from .models import Food, FoodStatus
 
+import random
+
 def format_food(food: Food):
     """
     Converts a SQLAlchemy Food object into a dictionary and removes
@@ -68,21 +70,49 @@ def delete_food(db: Session, food_id: int, supplier_id: int):
     db.delete(food)
     db.commit()
 
-def claim_food_item(db: Session, food_id: int, needy_id: int):
-    """Updates the status to claimed and assigns a receiver."""
-    food = db.query(Food).filter(Food.id == food_id, Food.status == FoodStatus.AVAILABLE).first()
-    if not food:
-        raise HTTPException(status_code=400, detail="Item is already claimed or unavailable")
-    
-    food.status = FoodStatus.CLAIMED
-    food.receiver_id = needy_id
-    db.commit()
-    db.refresh(food)
-    return food
+
 
 def get_food_by_id(db: Session, food_id: int):
     """Standard detail fetcher."""
     food = db.query(Food).filter(Food.id == food_id).first()
     if not food:
         raise HTTPException(status_code=404, detail="Food item not found")
+    return food
+
+# UPDATED: Generates a 4-digit code when food is claimed
+def claim_food_item(db: Session, food_id: int, needy_id: int):
+    food = db.query(Food).filter(Food.id == food_id, Food.status == FoodStatus.AVAILABLE).first()
+    if not food:
+        raise HTTPException(status_code=400, detail="Item is already claimed or unavailable")
+    
+    food.status = FoodStatus.CLAIMED
+    food.receiver_id = needy_id
+    
+    # GENERATE 4-DIGIT VERIFICATION CODE
+    food.verification_code = str(random.randint(1000, 9999)) 
+    
+    db.commit()
+    db.refresh(food)
+    return food
+
+# NEW: Verification logic for the Supplier
+def verify_pickup_logic(db: Session, food_id: int, supplier_id: int, input_code: str):
+    food = db.query(Food).filter(
+        Food.id == food_id, 
+        Food.supplier_id == supplier_id
+    ).first()
+    
+    if not food:
+        raise HTTPException(status_code=404, detail="Food listing not found")
+    
+    if food.status != FoodStatus.CLAIMED:
+        raise HTTPException(status_code=400, detail="Food is not in claimed state")
+
+    if food.verification_code != input_code:
+        raise HTTPException(status_code=400, detail="Invalid verification code")
+    
+    # Mark as COMPLETED upon correct code
+    food.status = FoodStatus.COMPLETED
+    db.commit()
+    db.refresh(food)
     return food

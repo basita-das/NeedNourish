@@ -8,6 +8,7 @@ from src.utils.db import Base
 class FoodStatus(str, enum.Enum):
     AVAILABLE = "available"
     CLAIMED = "claimed"
+    COMPLETED = "completed"  # New: Mark food as successfully handed over
     REMOVED = "removed"
 
 class FoodCategory(str, enum.Enum):
@@ -28,6 +29,9 @@ class Food(Base):
     expiry_time = Column(DateTime(timezone=True), nullable=False)
     status = Column(Enum(FoodStatus), default=FoodStatus.AVAILABLE)
     
+    # Secure Pickup Feature
+    verification_code = Column(String(4), nullable=True) # Stores the 4-digit OTP
+
     supplier_id = Column(Integer, ForeignKey("suppliers.id"), nullable=False)
     receiver_id = Column(Integer, ForeignKey("needies.id"), nullable=True)
 

@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 import { foodService } from "../../services/foodService";
 import FoodCard from "../../components/food/FoodCard";
 import { Search, MapPin } from "lucide-react";
+import { toast } from "react-toastify"; // Added Import
 
 const Explore = () => {
   const { t } = useTranslation();
   const [foods, setFoods] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [coords, setCoords] = useState(null);
 
   useEffect(() => {
@@ -18,36 +18,34 @@ const Explore = () => {
 
   useEffect(() => {
     if (coords) {
-      foodService.getNearby(coords.lat, coords.lon).then((data) => {
-        setFoods(data);
-        setLoading(false);
-      });
+      foodService.getNearby(coords.lat, coords.lon).then(setFoods);
     }
   }, [coords]);
 
   const handleClaim = async (id) => {
     try {
       await foodService.claimFood(id);
-      alert(t("food.status_claimed"));
+
+      // SUCCESS TOAST
+      toast.success(t("notify.claim_success"));
+
       setFoods(foods.filter((f) => f.id !== id));
     } catch (err) {
-      alert("Error");
+      toast.error(t("notify.error"));
     }
   };
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-800">
-          {t("food.nearby_title")}
-        </h1>
-        <p className="text-gray-500 text-sm flex items-center gap-1">
-          <MapPin size={14} /> {t("food.detecting")}...
-        </p>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-800 mb-2">
+        {t("food.nearby_title")}
+      </h1>
+      <p className="text-gray-500 text-sm flex items-center gap-1 mb-8">
+        <MapPin size={14} /> {t("food.detecting")}
+      </p>
 
       {foods.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-2xl border shadow-sm">
+        <div className="text-center py-20 bg-white rounded-2xl border">
           <Search size={48} className="mx-auto text-gray-300 mb-4" />
           <p className="text-gray-500 font-medium">{t("food.no_food")}</p>
         </div>

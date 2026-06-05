@@ -3,7 +3,8 @@ import { useTranslation } from "react-i18next";
 import { foodService } from "../../services/foodService";
 import { FoodCategory } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
-import { MapPin, Clock, Utensils, AlignLeft } from "lucide-react";
+import { MapPin, Clock, Utensils } from "lucide-react";
+import { toast } from "react-toastify"; // Added Import
 
 const AddFood = () => {
   const { t } = useTranslation();
@@ -23,38 +24,42 @@ const AddFood = () => {
   const getLocation = () => {
     setLocationLoading(true);
     if (!navigator.geolocation) {
-      alert("Geolocation error");
+      toast.error(t("notify.error"));
       setLocationLoading(false);
       return;
     }
-
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      (pos) => {
         setFormData({
           ...formData,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
         });
         setLocationLoading(false);
+        toast.info(t("food.btn_location")); // Helpful Toast
       },
-      () => {
-        setLocationLoading(false);
-      },
+      () => setLocationLoading(false),
     );
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.latitude) return;
+    if (!formData.latitude) {
+      toast.warning(t("food.detecting")); // Warning Toast if no location
+      return;
+    }
     setLoading(true);
     try {
       await foodService.createListing({
         ...formData,
         expiry_time: new Date(formData.expiry_time).toISOString(),
       });
+
+      // SUCCESS TOAST
+      toast.success(t("notify.post_success"));
       navigate("/supplier-dashboard");
     } catch (err) {
-      alert("Error");
+      toast.error(t("notify.error"));
     } finally {
       setLoading(false);
     }
@@ -62,73 +67,54 @@ const AddFood = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <div className="bg-white rounded-2xl shadow-xl border p-8">
+      <div className="bg-white rounded-2xl shadow-sm border p-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">
           {t("food.add_title")}
         </h1>
-
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-              <Utensils size={18} /> {t("food.label_title")}
-            </label>
-            <input
-              type="text"
-              placeholder={t("food.ph_title")}
-              required
-              className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500 transition-all"
+          <input
+            type="text"
+            placeholder={t("food.ph_title")}
+            required
+            className="w-full p-3 border rounded-xl outline-none"
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <select
+              className="w-full p-3 border rounded-xl outline-none"
               onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
+                setFormData({ ...formData, category: e.target.value })
+              }
+            >
+              {Object.values(FoodCategory).map((cat) => (
+                <option key={cat} value={cat}>
+                  {t(`categories.${cat}`)}
+                </option>
+              ))}
+            </select>
+            <input
+              type="datetime-local"
+              required
+              className="w-full p-3 border rounded-xl outline-none"
+              onChange={(e) =>
+                setFormData({ ...formData, expiry_time: e.target.value })
               }
             />
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                {t("food.label_cat")}
-              </label>
-              <select
-                className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"
-                onChange={(e) =>
-                  setFormData({ ...formData, category: e.target.value })
-                }
-              >
-                {Object.values(FoodCategory).map((cat) => (
-                  <option key={cat} value={cat}>
-                    {t(`categories.${cat}`)}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-                <Clock size={18} /> {t("food.label_expiry")}
-              </label>
-              <input
-                type="datetime-local"
-                required
-                className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"
-                onChange={(e) =>
-                  setFormData({ ...formData, expiry_time: e.target.value })
-                }
-              />
-            </div>
-          </div>
-
           <button
             type="button"
             onClick={getLocation}
-            className="w-full text-sm border border-green-600 text-green-600 py-3 rounded-xl hover:bg-green-50 transition-all flex justify-center items-center gap-2"
+            className="w-full border border-green-600 text-green-600 py-3 rounded-xl flex justify-center items-center gap-2"
           >
             <MapPin size={18} />{" "}
             {locationLoading ? t("food.detecting") : t("food.btn_location")}
           </button>
-
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition-all"
+            className="w-full bg-green-600 text-white py-4 rounded-xl font-bold"
           >
             {loading ? t("food.posting") : t("food.btn_submit")}
           </button>

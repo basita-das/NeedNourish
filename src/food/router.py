@@ -64,3 +64,19 @@ def claim_item(
     """Claim a food item. Restricted to Needy users (Receivers)."""
     claimed_food = controller.claim_food_item(db, id, n.id)
     return controller.format_food(claimed_food)
+
+
+# NEW: The Verification Endpoint for OTP feature
+@router.post("/{id}/verify", response_model=dtos.FoodRead)
+def verify_pickup(
+    id: int, 
+    code: str = Query(..., min_length=4, max_length=4), 
+    db: Session = Depends(get_db), 
+    s=Depends(get_current_supplier)
+):
+    """
+    Verify the 4-digit code provided by the receiver. 
+    Restricted to the original Supplier.
+    """
+    verified_food = controller.verify_pickup_logic(db, id, s.id, code)
+    return controller.format_food(verified_food)

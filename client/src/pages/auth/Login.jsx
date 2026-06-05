@@ -3,25 +3,29 @@ import { authService } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify"; // Added Import
 
 const Login = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("suppliers");
-  const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     try {
       const data = await authService.login(email, password, role);
       login(data.access_token);
+
+      // SUCCESS TOAST
+      toast.success(t("notify.login_success"));
+
       navigate(role === "suppliers" ? "/supplier-dashboard" : "/explore");
     } catch (err) {
-      setError(err.response?.data?.detail || "Invalid email or password");
+      // ERROR TOAST
+      toast.error(t("notify.login_error"));
     }
   };
 
@@ -33,12 +37,6 @@ const Login = () => {
         </h2>
         <p className="text-center text-gray-500 mb-8">{t("auth.subtitle")}</p>
 
-        {error && (
-          <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
-            {error}
-          </div>
-        )}
-
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -47,7 +45,7 @@ const Login = () => {
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-500 outline-none"
+              className="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="suppliers">{t("auth.donor")}</option>
               <option value="needies">{t("auth.receiver")}</option>
@@ -58,16 +56,15 @@ const Login = () => {
             type="email"
             placeholder={t("auth.email_ph")}
             required
-            className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
           <input
             type="password"
             placeholder={t("auth.pass_ph")}
             required
-            className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

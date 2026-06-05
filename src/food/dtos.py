@@ -28,6 +28,11 @@ class FoodRead(FoodBase):
     status: FoodStatus
     supplier_id: int
     receiver_id: Optional[int] = None
+    
+    # --- ADDED THIS LINE FOR OTP FEATURE ---
+    verification_code: Optional[str] = None 
+    # -----------------------
+
     created_at: datetime
     updated_at: Optional[datetime] = None
     
