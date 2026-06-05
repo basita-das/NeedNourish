@@ -32,13 +32,14 @@
     "add_title": "अतिरिक्त भोजन पोस्ट करें",
     "my_inventory_title": "मेरी सूची",
     "label_title": "भोजन का शीर्षक",
-    "label_desc": "विवरण",
+    "label_desc": "विवरण (वैकल्पिक)",
     "label_cat": "श्रेणी",
     "label_expiry": "समाप्ति समय",
     "btn_location": "मेरी लोकेशन खोजें",
     "btn_submit": "भोजन लिस्ट करें",
     "ph_title": "जैसे: 10 ताज़ा बैगल्स",
     "ph_desc": "विवरण...",
+    "no_desc_default": "कोई विवरण नहीं प्रदान किया गया।",
     "status_available": "उपलब्ध",
     "status_claimed": "दावा किया गया",
     "status_completed": "सुपुर्द किया गया",
@@ -59,7 +60,8 @@
     "btn_edit": "संपादित करें",
     "btn_delete": "हटाएं",
     "confirm_delete": "क्या आप वाकई इस लिस्टिंग को हटाना चाहते हैं?",
-    "update_btn": "लिस्टिंग अपडेट करें"
+    "update_btn": "लिस्टिंग अपडेट करें",
+    "status_received": "प्राप्त"
   },
   "categories": {
     "bakery": "बेकरी",
@@ -84,5 +86,11 @@
     "error": "कुछ गलत हो गया।",
     "delete_success": "लिस्टिंग सफलतापूर्वक हटाई गई।",
     "edit_success": "लिस्टिंग सफलतापूर्वक अपडेट की गई।"
+  },
+  "map": {
+    "title": "मानचित्र दृश्य",
+    "view_details": "विवरण देखें",
+    "your_location": "आपका स्थान",
+    "food_here": "यहाँ भोजन उपलब्ध है"
   }
 }

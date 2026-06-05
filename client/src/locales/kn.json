@@ -32,13 +32,14 @@
     "add_title": "ಹೆಚ್ಚುವರಿ ಆಹಾರ ಪೋಸ್ಟ್ ಮಾಡಿ",
     "my_inventory_title": "ನನ್ನ ದಾಸ್ತಾನು",
     "label_title": "ಆಹಾರದ ಹೆಸರು",
-    "label_desc": "ವಿವರಣೆ",
+    "label_desc": "ವಿವರಣೆ (ಐಚ್ಛಿಕ)",
     "label_cat": "ವರ್ಗ",
     "label_expiry": "ಮುಕ್ತಾಯ ಸಮಯ",
     "btn_location": "ನನ್ನ ಸ್ಥಳ ಪತ್ತೆಹಚ್ಚಿ",
     "btn_submit": "ಆಹಾರವನ್ನು ಪಟ್ಟಿ ಮಾಡಿ",
     "ph_title": "ಉದಾ: 10 ತಾಜಾ ಬಾಗಲ್ಗಳು",
     "ph_desc": "ವಿವರಗಳು...",
+    "no_desc_default": "ಯಾವುದೇ ವಿವರಣೆ ಒದಗಲಾಗಲಿಲ്ല.",
     "status_available": "ಲಭ್ಯವಿದೆ",
     "status_claimed": "ಪಡೆಯಲಾಗಿದೆ",
     "status_completed": "ಹಸ್ತಾಂತರಿಸಲಾಗಿದೆ",
@@ -59,7 +60,8 @@
     "btn_edit": "ಸಂಪಾದಿಸಿ",
     "btn_delete": "ಅಳಿಸಿ",
     "confirm_delete": "ನೀವು ಈ ಪಟ್ಟಿಯನ್ನು ಅಳಿಸಲು ಖಚಿತವಾಗಿದ್ದೀರಾ?",
-    "update_btn": "ಪಟ್ಟಿ ನವೀಕರಿಸಿ"
+    "update_btn": "ಪಟ್ಟಿ ನವೀಕರಿಸಿ",
+    "status_received": "ಸ್ವೀಕರಿಸಲಾಗಿದೆ"
   },
   "categories": {
     "bakery": "ಬೇಕರಿ",
@@ -84,5 +86,11 @@
     "error": "ಏನೋ ತಪ್ಪಾಗಿದೆ.",
     "delete_success": "ಪಟ್ಟಿ ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ.",
     "edit_success": "ಪಟ್ಟಿ ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ."
+  },
+  "map": {
+    "title": "ನಕ್ಷೆ ವೀಕ್ಷಣೆ",
+    "view_details": "ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
+    "your_location": "ನಿಮ್ಮ ಸ್ಥಳ",
+    "food_here": "ಇಲ್ಲಿ ಆಹಾರ ಲಭ್ಯವಿದೆ"
   }
 }

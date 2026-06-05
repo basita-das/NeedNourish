@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Leaflet Map Container */
+.leaflet-container {
+  width: 100%;
+  height: 400px;
+  border-radius: 1.5rem;
+  z-index: 10;
+}

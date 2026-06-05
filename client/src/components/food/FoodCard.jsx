@@ -22,6 +22,20 @@ const FoodCard = ({ food, role, onClaim, onVerify, onDelete }) => {
   const isClaimed = food.status === "claimed";
   const isCompleted = food.status === "completed";
 
+  // Determine the translated status text based on role
+  const getStatusText = () => {
+    if (isAvailable) return t("food.status_available");
+    if (isClaimed) return t("food.status_claimed");
+    if (isCompleted) {
+      // If Supplier (Donor), show "Handed Over"
+      // If Needy (Receiver), show "Received"
+      return role === "supplier"
+        ? t("food.status_completed")
+        : t("food.status_received");
+    }
+    return "";
+  };
+
   return (
     <div className="bg-white rounded-2xl border p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full border-t-4 border-t-green-500">
       {/* 1. Header: Title and Status Badge */}
@@ -38,11 +52,7 @@ const FoodCard = ({ food, role, onClaim, onVerify, onDelete }) => {
                 : "bg-orange-100 text-orange-700"
           }`}
         >
-          {isAvailable
-            ? t("food.status_available")
-            : isCompleted
-              ? t("food.status_completed")
-              : t("food.status_claimed")}
+          {getStatusText()}
         </span>
       </div>
 
@@ -149,8 +159,11 @@ const FoodCard = ({ food, role, onClaim, onVerify, onDelete }) => {
 
       {/* E. ANY USER: COMPLETED STATUS VIEW */}
       {isCompleted && (
-        <div className="mt-4 p-4 bg-blue-50 text-blue-700 rounded-2xl flex items-center justify-center gap-3 font-black text-sm uppercase border border-blue-100 shadow-sm animate-in fade-in zoom-in duration-300">
-          <CheckCircle2 size={20} /> {t("food.status_completed")}
+        <div className="mt-4 p-4 bg-blue-50 text-blue-700 rounded-2xl flex items-center justify-center gap-3 font-black text-sm uppercase border border-blue-100">
+          <CheckCircle2 size={20} />
+          {role === "supplier"
+            ? t("food.status_completed")
+            : t("food.status_received")}
         </div>
       )}
     </div>

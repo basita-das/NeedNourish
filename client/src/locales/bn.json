@@ -32,13 +32,14 @@
     "add_title": "অতিরিক্ত খাবার পোস্ট করুন",
     "my_inventory_title": "আমার তালিকা",
     "label_title": "খাবারের শিরোনাম",
-    "label_desc": "বর্ণনা",
+    "label_desc": "বর্ণনা (ঐচ্ছিক)",
     "label_cat": "বিভাগ",
-    "label_expiry": "মেয়াদ শেষের সময়",
+    "label_expiry": "মেয়াদ শেষের সময়",
     "btn_location": "আমার অবস্থান খুঁজুন",
     "btn_submit": "খাবার তালিকাভুক্ত করুন",
     "ph_title": "যেমন: ১০টি ফ্রেশ ব্যাগেল",
     "ph_desc": "বিস্তারিত...",
+    "no_desc_default": "কোনো বর্ণনা প্রদান করা হয়নি।",
     "status_available": "উপলব্ধ",
     "status_claimed": "সংগৃহীত",
     "status_completed": "হস্তান্তর করা হয়েছে",
@@ -59,7 +60,8 @@
     "btn_edit": "সম্পাদনা",
     "btn_delete": "মুছে ফেলুন",
     "confirm_delete": "আপনি কি এই তালিকাটি মুছে ফেলতে চান?",
-    "update_btn": "তালিকা আপডেট করুন"
+    "update_btn": "তালিকা আপডেট করুন",
+    "status_received": "প্রাপ্ত"
   },
   "categories": {
     "bakery": "বেকারি",
@@ -84,5 +86,11 @@
     "error": "কিছু ভুল হয়েছে।",
     "delete_success": "তালিকা সফলভাবে মুছে ফেলা হয়েছে।",
     "edit_success": "তালিকা সফলভাবে আপডেট করা হয়েছে।"
+  },
+  "map": {
+    "title": "মানচিত্র দেখুন",
+    "view_details": "বিস্তারিত দেখুন",
+    "your_location": "আপনার অবস্থান",
+    "food_here": "এখানে খাবার উপলব্ধ"
   }
 }

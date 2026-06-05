@@ -32,13 +32,14 @@
     "add_title": "Post Surplus Food",
     "my_inventory_title": "My Inventory",
     "label_title": "Food Title",
-    "label_desc": "Description",
     "label_cat": "Category",
     "label_expiry": "Expiry Time",
     "btn_location": "Detect My Location",
     "btn_submit": "Post Food Listing",
     "ph_title": "e.g., 10 Fresh Bagels",
-    "ph_desc": "Packaging, allergens, etc.",
+    "ph_desc": "No description given",
+    "label_desc": "Description (Optional)",
+    "no_desc_default": "No description provided.",
     "status_available": "Available",
     "status_claimed": "Claimed",
     "status_completed": "Handed Over",
@@ -52,14 +53,15 @@
     "detecting": "Fetching GPS...",
     "posting": "Posting...",
     "history_title": "My Claim History",
-    "history_subtitle": "View all the food items you've helped save.",
+    "history_subtitle": "View all the food items you've claimed.",
     "claimed_on": "Claimed on",
     "no_history": "You haven't claimed any food yet.",
     "edit_title": "Edit Food Listing",
     "btn_edit": "Edit",
     "btn_delete": "Delete",
     "confirm_delete": "Are you sure you want to delete this listing?",
-    "update_btn": "Update Listing"
+    "update_btn": "Update Listing",
+    "status_received": "Received"
   },
   "categories": {
     "bakery": "Bakery",
@@ -84,5 +86,11 @@
     "error": "Something went wrong.",
     "delete_success": "Listing removed successfully.",
     "edit_success": "Listing updated successfully."
+  },
+  "map": {
+    "title": "Map View",
+    "view_details": "View Details",
+    "your_location": "Your Location",
+    "food_here": "Food available here"
   }
 }
