@@ -51,6 +51,10 @@ def update_food(db: Session, food_id: int, food_in, supplier_id: int):
     if not food or food.supplier_id != supplier_id:
         raise HTTPException(status_code=403, detail="Permission denied")
     
+    # NEW RULE: Cannot edit if already claimed or completed
+    if food.status != FoodStatus.AVAILABLE:
+        raise HTTPException(status_code=400, detail="Cannot edit an item that is already claimed")
+    
     data = food_in.model_dump(exclude_unset=True)
     if "latitude" in data or "longitude" in data:
         lat = data.get("latitude", to_shape(food.location).y)
@@ -67,6 +71,11 @@ def delete_food(db: Session, food_id: int, supplier_id: int):
     food = db.query(Food).filter(Food.id == food_id).first()
     if not food or food.supplier_id != supplier_id:
         raise HTTPException(status_code=403, detail="Permission denied")
+    
+    # NEW RULE: Cannot delete if already claimed
+    if food.status != FoodStatus.AVAILABLE:
+        raise HTTPException(status_code=400, detail="Cannot delete an item that is already claimed")
+
     db.delete(food)
     db.commit()
 

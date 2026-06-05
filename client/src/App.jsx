@@ -12,15 +12,16 @@ import { useAuth } from "./context/AuthContext";
 // Components
 import Dashboard from "./pages/supplier/Dashboard";
 import AddFood from "./pages/supplier/AddFood";
+import EditFood from "./pages/supplier/EditFood"; // Ensure this is here!
 import Explore from "./pages/needy/Explore";
 import MyClaims from "./pages/needy/MyClaims";
 
 function App() {
-  const { isAuthenticated, loading, user } = useAuth(); // Added 'user' here
+  const { isAuthenticated, loading, user } = useAuth();
 
   if (loading)
     return (
-      <div className="h-screen flex items-center justify-center font-bold text-green-600">
+      <div className="h-screen flex items-center justify-center font-bold text-green-600 text-xl">
         Loading...
       </div>
     );
@@ -48,6 +49,12 @@ function App() {
           element={isAuthenticated ? <AddFood /> : <Navigate to="/login" />}
         />
 
+        {/* NEW ROUTE */}
+        <Route
+          path="/edit-food/:id"
+          element={isAuthenticated ? <EditFood /> : <Navigate to="/login" />}
+        />
+
         {/* Protected Needy Routes */}
         <Route
           path="/explore"
@@ -58,7 +65,6 @@ function App() {
           element={isAuthenticated ? <MyClaims /> : <Navigate to="/login" />}
         />
 
-        {/* Smart Home Redirection */}
         <Route
           path="/"
           element={

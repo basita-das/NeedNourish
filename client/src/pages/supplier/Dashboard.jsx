@@ -31,17 +31,21 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  // NEW: Handle Verification Logic
-  const handleVerify = async (id, code) => {
-    if (code.length !== 4) {
-      toast.warning(t("food.code_placeholder"));
-      return;
+  const handleDelete = async (id) => {
+    try {
+      await foodService.deleteListing(id);
+      toast.success(t("notify.delete_success"));
+      fetchData(); // This refreshes the list after deleting
+    } catch (err) {
+      toast.error(t("notify.error"));
     }
+  };
 
+  const handleVerify = async (id, code) => {
     try {
       await foodService.verifyPickup(id, code);
       toast.success(t("notify.verify_success"));
-      fetchData(); // Refresh data to show "Completed" status and update stats
+      fetchData();
     } catch (err) {
       toast.error(t("notify.verify_error"));
     }
@@ -101,6 +105,7 @@ const Dashboard = () => {
               food={item}
               role="supplier"
               onVerify={handleVerify} // Pass verification handler
+              onDelete={handleDelete} // Pass delete handlerß
             />
           ))}
         </div>

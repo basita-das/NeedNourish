@@ -54,7 +54,12 @@
     "history_title": "My Claim History",
     "history_subtitle": "View all the food items you've helped save.",
     "claimed_on": "Claimed on",
-    "no_history": "You haven't claimed any food yet."
+    "no_history": "You haven't claimed any food yet.",
+    "edit_title": "Edit Food Listing",
+    "btn_edit": "Edit",
+    "btn_delete": "Delete",
+    "confirm_delete": "Are you sure you want to delete this listing?",
+    "update_btn": "Update Listing"
   },
   "categories": {
     "bakery": "Bakery",
@@ -76,6 +81,8 @@
     "claim_success": "Item claimed! Check My Claims.",
     "verify_success": "Pickup confirmed successfully!",
     "verify_error": "Invalid code. Please try again.",
-    "error": "Something went wrong."
+    "error": "Something went wrong.",
+    "delete_success": "Listing removed successfully.",
+    "edit_success": "Listing updated successfully."
   }
 }
