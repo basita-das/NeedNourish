@@ -92,5 +92,16 @@
     "view_details": "View Details",
     "your_location": "Your Location",
     "food_here": "Food available here"
+  },
+  "pdf": {
+    "download_btn": "Download Impact Report",
+    "report_title": "Social Impact Report",
+    "generated_on": "Generated on",
+    "summary": "Impact Summary",
+    "table_title": "Item Name",
+    "table_cat": "Category",
+    "table_status": "Current Status",
+    "table_date": "Date Posted",
+    "footer": "Thank you for helping combat hunger with NeedNourish."
   }
 }

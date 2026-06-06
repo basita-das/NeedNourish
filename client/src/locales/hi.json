@@ -92,5 +92,16 @@
     "view_details": "विवरण देखें",
     "your_location": "आपका स्थान",
     "food_here": "यहाँ भोजन उपलब्ध है"
+  },
+  "pdf": {
+    "download_btn": "प्रभाव रिपोर्ट डाउनलोड करें",
+    "report_title": "सामाजिक प्रभाव रिपोर्ट",
+    "generated_on": "तैयार किया गया",
+    "summary": "प्रभाव का सारांश",
+    "table_title": "आइटम का नाम",
+    "table_cat": "श्रेणी",
+    "table_status": "वर्तमान स्थिति",
+    "table_date": "पोस्ट की तारीख",
+    "footer": "NeedNourish के सहयोग से हिंगर के खिलाफ लड़ाई में धन्यवाद।"
   }
 }

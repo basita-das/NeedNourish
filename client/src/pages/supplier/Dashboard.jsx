@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { supplierService } from "../../services/supplierService";
-import { foodService } from "../../services/foodService"; // Import for verification
+import { foodService } from "../../services/foodService";
 import FoodCard from "../../components/food/FoodCard";
-import { Package, CheckCircle, Clock } from "lucide-react";
+import { Package, CheckCircle, Clock, FileDown } from "lucide-react"; // Added FileDown
 import { toast } from "react-toastify";
+import { generateImpactReport } from "../../utils/pdfGenerator"; // Added Import
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -31,11 +32,23 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  // PDF Download Handler
+  const handleDownloadReport = () => {
+    try {
+      generateImpactReport(stats, inventory, t);
+      // Use 't' here, not 'te'
+      toast.success(t("notify.verify_success"));
+    } catch (err) {
+      console.error("PDF Error:", err);
+      toast.error(t("notify.error"));
+    }
+  };
+
   const handleDelete = async (id) => {
     try {
       await foodService.deleteListing(id);
       toast.success(t("notify.delete_success"));
-      fetchData(); // This refreshes the list after deleting
+      fetchData();
     } catch (err) {
       toast.error(t("notify.error"));
     }
@@ -60,9 +73,21 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-3xl font-extrabold mb-8 text-gray-900 tracking-tight">
-        NeedNourish <span className="text-green-600">{t("nav.dashboard")}</span>
-      </h1>
+      {/* Updated Header with Download Button */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          NeedNourish{" "}
+          <span className="text-green-600">{t("nav.dashboard")}</span>
+        </h1>
+
+        <button
+          onClick={handleDownloadReport}
+          className="flex items-center gap-2 bg-white border-2 border-green-600 text-green-600 px-6 py-2.5 rounded-2xl font-bold hover:bg-green-600 hover:text-white transition-all shadow-sm active:scale-95 group"
+        >
+          <FileDown size={20} className="group-hover:animate-bounce" />
+          <span>{t("pdf.download_btn")}</span>
+        </button>
+      </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -104,8 +129,8 @@ const Dashboard = () => {
               key={item.id}
               food={item}
               role="supplier"
-              onVerify={handleVerify} // Pass verification handler
-              onDelete={handleDelete} // Pass delete handlerß
+              onVerify={handleVerify}
+              onDelete={handleDelete}
             />
           ))}
         </div>

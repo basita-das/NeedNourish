@@ -2,6 +2,26 @@
   "dependencies": {
     "i18next": "^26.3.1",
     "i18next-browser-languagedetector": "^8.2.1",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
     "react-i18next": "^17.0.8"
-  }
+  },
+  "name": "neednourish",
+  "version": "1.0.0",
+  "description": "**NeedNourish** is a full-stack platform designed to bridge the gap between food surplus and food scarcity. By connecting **Suppliers** (restaurants, bakeries, individuals) with **Needies** (NGOs, volunteers, people in need), we aim to reduce food waste and combat hunger using real-time geospatial data.",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basita-das/NeedNourish.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/basita-das/NeedNourish/issues"
+  },
+  "homepage": "https://github.com/basita-das/NeedNourish#readme"
 }
