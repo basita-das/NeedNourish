@@ -8,5 +8,13 @@ class Settings(BaseSettings):
     # ALGORITHM:str
     # EXP_TIME_MINUTES:int
 
+    MAIL_USERNAME: str
+    MAIL_PASSWORD: str
+    MAIL_FROM: str
+    MAIL_PORT: int
+    MAIL_SERVER: str
+    MAIL_STARTTLS: bool = True
+    MAIL_SSL_TLS: bool = False
+
 
 settings = Settings() #here settings object will be created and can be imported in other modules to access the configuration values. The DB_CONNECTION value will be read from the .env file.

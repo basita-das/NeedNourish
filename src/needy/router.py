@@ -12,8 +12,8 @@ from src.utils.helper import create_access_token, verify_password
 router = APIRouter(prefix="/needies", tags=["Receivers"])
 
 @router.post("/register", response_model=dtos.NeedyRead)
-def register(needy_in: dtos.NeedyCreate, db: Session = Depends(get_db)):
-    return controller.create_needy(db, needy_in)
+async def register(needy_in: dtos.NeedyCreate, db: Session = Depends(get_db)):
+    return await controller.create_needy(db, needy_in)
 
 @router.post("/login")
 def login(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):

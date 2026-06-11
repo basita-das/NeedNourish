@@ -13,8 +13,8 @@ from . import controller, dtos, models
 router = APIRouter(prefix="/suppliers", tags=["Suppliers"])
 
 @router.post("/register", response_model=dtos.SupplierRead)
-def register(supplier_in: dtos.SupplierCreate, db: Session = Depends(get_db)):
-    return controller.create_supplier(db, supplier_in)
+async def register(supplier_in: dtos.SupplierCreate, db: Session = Depends(get_db)):
+    return await controller.create_supplier(db, supplier_in)
 
 @router.post("/login")
 def login(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):

@@ -1,11 +1,12 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
+from src.utils.mail import send_welcome_email
 from .models import Supplier
 from .dtos import SupplierCreate
 from src.food.models import Food, FoodStatus
 from src.utils.helper import hash_password
 
-def create_supplier(db: Session, supplier_in: SupplierCreate):
+async def create_supplier(db: Session, supplier_in: SupplierCreate):
     if db.query(Supplier).filter(Supplier.email == supplier_in.email).first():
         raise HTTPException(status_code=400, detail="Email already exists")
     db_supplier = Supplier(
@@ -15,6 +16,8 @@ def create_supplier(db: Session, supplier_in: SupplierCreate):
     db.add(db_supplier)
     db.commit()
     db.refresh(db_supplier)
+    # Trigger Email
+    await send_welcome_email(db_supplier.email, db_supplier.business_name, "Supplier (Donor)")
     return db_supplier
 
 def get_supplier_dashboard_stats(db: Session, supplier_id: int):
