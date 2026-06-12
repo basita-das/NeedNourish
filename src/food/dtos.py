@@ -33,6 +33,11 @@ class FoodRead(FoodBase):
     verification_code: Optional[str] = None 
     # -----------------------
 
+    # chat feature
+    supplier_name: str
+    receiver_name: Optional[str] = None
+
+
     created_at: datetime
     updated_at: Optional[datetime] = None
     

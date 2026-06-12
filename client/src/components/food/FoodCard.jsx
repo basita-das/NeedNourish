@@ -10,7 +10,7 @@ import {
   Ticket,
   Pencil,
   Trash2,
-  Info,
+  MessageCircle,
 } from "lucide-react";
 
 const FoodCard = ({ food, role, onClaim, onVerify, onDelete }) => {
@@ -22,13 +22,17 @@ const FoodCard = ({ food, role, onClaim, onVerify, onDelete }) => {
   const isClaimed = food.status === "claimed";
   const isCompleted = food.status === "completed";
 
+  // Logic to determine whose name to show in the Chat button
+  // If I am the Supplier, I want to see the Receiver's Name.
+  // If I am the Needy, I want to see the Supplier's (Business) Name.
+  const otherName =
+    role === "supplier" ? food.receiver_name : food.supplier_name;
+
   // Determine the translated status text based on role
   const getStatusText = () => {
     if (isAvailable) return t("food.status_available");
     if (isClaimed) return t("food.status_claimed");
     if (isCompleted) {
-      // If Supplier (Donor), show "Handed Over"
-      // If Needy (Receiver), show "Received"
       return role === "supplier"
         ? t("food.status_completed")
         : t("food.status_received");
@@ -61,7 +65,7 @@ const FoodCard = ({ food, role, onClaim, onVerify, onDelete }) => {
         {food.description || t("food.ph_desc")}
       </p>
 
-      {/* 3. Details Section (Category & Expiry) */}
+      {/* 3. Details Section (Category, Expiry, Location) */}
       <div className="space-y-3 text-sm text-gray-500 mb-6 flex-grow border-t pt-4">
         <div className="flex items-center gap-2">
           <Tag size={16} className="text-green-500" />
@@ -88,11 +92,23 @@ const FoodCard = ({ food, role, onClaim, onVerify, onDelete }) => {
         </div>
       </div>
 
+      {/* --- SHARED FEATURE: SECURE CHAT BUTTON (If Claimed or Completed) --- */}
+      {(isClaimed || isCompleted) && (
+        <button
+          onClick={() => navigate(`/chat/${food.id}`)}
+          className="mb-3 w-full flex items-center justify-center gap-2 py-2.5 border-2 border-green-600 text-green-600 rounded-xl font-bold hover:bg-green-50 transition-all active:scale-95 shadow-sm"
+        >
+          <MessageCircle size={18} />
+          {/* Dynamically show the other person's name */}
+          {t("chat.chat_with")} {otherName || "..."}
+        </button>
+      )}
+
       {/* --- CONDITIONAL ACTIONS SECTION --- */}
 
       {/* A. SUPPLIER ACTIONS: EDIT & DELETE (Only if item is Available) */}
       {role === "supplier" && isAvailable && (
-        <div className="mt-4 flex gap-2 border-t pt-4">
+        <div className="mt-2 flex gap-2 border-t pt-4">
           <button
             onClick={() => navigate(`/edit-food/${food.id}`)}
             className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-gray-50 text-gray-700 rounded-xl hover:bg-gray-100 hover:text-green-600 font-bold transition-all border border-gray-100 shadow-sm"
@@ -114,7 +130,7 @@ const FoodCard = ({ food, role, onClaim, onVerify, onDelete }) => {
 
       {/* B. RECEIVER VIEW: DISPLAY PICKUP CODE (Only if item is Claimed) */}
       {role === "needy" && isClaimed && (
-        <div className="mt-4 p-4 bg-orange-50 border-2 border-dashed border-orange-200 rounded-2xl text-center">
+        <div className="mt-2 p-4 bg-orange-50 border-2 border-dashed border-orange-200 rounded-2xl text-center">
           <div className="flex justify-center items-center gap-2 text-orange-600 mb-1">
             <Ticket size={18} />
             <p className="text-[10px] font-black uppercase tracking-widest">

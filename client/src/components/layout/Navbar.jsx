@@ -11,6 +11,7 @@ import {
   Utensils,
 } from "lucide-react";
 import LanguageSelector from "./LanguageSelector";
+import { MessageSquare } from "lucide-react";
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -38,6 +39,18 @@ const Navbar = () => {
           <div className="flex items-center gap-4 md:gap-6">
             {/* Language Selector Button */}
             <LanguageSelector />
+
+            <Link
+              to="/inbox"
+              className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-full transition-all relative group"
+              title={t("chat.inbox_title")}
+            >
+              <MessageSquare size={22} />
+              {/* Modern Tooltip */}
+              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                {t("chat.inbox_title")}
+              </span>
+            </Link>
 
             {/* NAVIGATION LINKS */}
             {isAuthenticated ? (

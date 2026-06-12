@@ -103,5 +103,17 @@
     "table_status": "Current Status",
     "table_date": "Date Posted",
     "footer": "Thank you for helping combat hunger with NeedNourish."
+  },
+  "chat": {
+    "btn_chat_donor": "Chat with Donor",
+    "btn_chat_receiver": "Chat with Receiver",
+    "chat_with": "Chat with",
+    "chatting_with": "Chatting with",
+    "title": "Messages",
+    "placeholder": "Type a message...",
+    "no_messages": "No messages yet.",
+    "inbox_title": "My Messages",
+    "no_chats": "No active conversations yet.",
+    "view_chat": "Open Chat"
   }
 }

@@ -17,6 +17,9 @@ def format_food(food: Food):
     # Create a copy of the attributes
     data = food.__dict__.copy()
     
+    data["supplier_name"] = food.supplier.business_name if food.supplier else "Unknown"
+    data["receiver_name"] = food.receiver.full_name if food.receiver else None
+    
     # REMOVE THE BINARY OBJECTS THAT CAUSE CRASHES
     data.pop("location", None)
     data.pop("_sa_instance_state", None)
