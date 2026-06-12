@@ -59,7 +59,7 @@ const Navbar = () => {
                   <>
                     <Link
                       to="/supplier-dashboard"
-                      className="flex items-center gap-1 text-gray-600 hover:text-green-600 hidden md:flex"
+                      className="display:flex items-center gap-1 text-gray-600 hover:text-green-600 hidden md:flex"
                     >
                       <LayoutDashboard size={18} /> {t("nav.dashboard")}
                     </Link>
@@ -80,7 +80,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       to="/history"
-                      className="flex items-center gap-1 text-gray-600 hover:text-green-600 hidden md:flex"
+                      className="display:flex items-center gap-1 text-gray-600 hover:text-green-600 hidden md:flex"
                     >
                       <History size={18} /> {t("nav.claims")}
                     </Link>
