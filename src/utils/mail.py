@@ -1,20 +1,36 @@
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 from src.utils.settings import settings
 
-# SMTP Configuration
-conf = ConnectionConfig(
-    MAIL_USERNAME = settings.MAIL_USERNAME,
-    MAIL_PASSWORD = settings.MAIL_PASSWORD,
-    MAIL_FROM = settings.MAIL_FROM,
-    MAIL_PORT = settings.MAIL_PORT,
-    MAIL_SERVER = settings.MAIL_SERVER,
-    MAIL_STARTTLS = settings.MAIL_STARTTLS,
-    MAIL_SSL_TLS = settings.MAIL_SSL_TLS,
-    USE_CREDENTIALS = True,
-    VALIDATE_CERTS = False
-)
+
+# Check whether email configuration is available
+mail_configured = all([
+    settings.MAIL_USERNAME,
+    settings.MAIL_PASSWORD,
+    settings.MAIL_FROM,
+    settings.MAIL_SERVER,
+])
+
+
+# Only create SMTP configuration if email settings are available
+conf = None
+
+if mail_configured:
+    conf = ConnectionConfig(
+        MAIL_USERNAME=settings.MAIL_USERNAME,
+        MAIL_PASSWORD=settings.MAIL_PASSWORD,
+        MAIL_FROM=settings.MAIL_FROM,
+        MAIL_PORT=settings.MAIL_PORT,
+        MAIL_SERVER=settings.MAIL_SERVER,
+        MAIL_STARTTLS=settings.MAIL_STARTTLS,
+        MAIL_SSL_TLS=settings.MAIL_SSL_TLS,
+        USE_CREDENTIALS=True,
+        VALIDATE_CERTS=False
+    )
 
 async def send_welcome_email(email: str, name: str, role: str):
+
+    if not mail_configured:
+        return
     """
     Sends an English welcome email using await.
     """
