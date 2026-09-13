@@ -79,6 +79,7 @@ const ChatRoom = () => {
     try {
       await chatService.sendMessage(foodId, user.id, user.role, messageText);
     } catch (error) {
+      console.error("CHAT SEND ERROR:", error);
       toast.error(t("notify.error"));
     }
   };
