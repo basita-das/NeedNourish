@@ -62,6 +62,9 @@ const Register = () => {
           <input
             type="text"
             required
+            value={
+              role === "suppliers" ? formData.business_name : formData.full_name
+            }
             placeholder={
               role === "suppliers" ? t("auth.biz_ph") : t("auth.name_ph")
             }
